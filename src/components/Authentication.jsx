@@ -36,6 +36,8 @@ export default function Authentication(props) {
         } catch (err) {
             console.log(err.message);
             setError(err.message);
+        } finally {
+            setIsAuthenticating(false);
         }
     }
 
