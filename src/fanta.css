@@ -1,0 +1,773 @@
+/**
+* Starbucks.css (Re-skin of Fanta.css)
+* Theme: Iconic Green & Clean Coffeehouse
+* *
+* Sections
+* 1. Content sectioning
+* 2. Text content
+* 3. Inline text semantics
+* 4. Image and multimedia
+* 5. Tables
+* 6. Forms
+* 7. Interactive elements
+*
+*/
+
+/* Swapped Fantasy fonts for a clean Sans-Serif (Inter) to match Starbucks style */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    /* =========================
+       LIGHT MODE (Unchanged)
+       ========================= */
+    --background-primary: #ffffff; 
+    --background-secondary: #f9f9f9;
+    --background-tertiary: #d4e9e2; /* Starbucks Mint Accent */
+    --background-accent: #f2f0eb;   /* Warm Beige */
+    --background-compliment: #1e3932;
+    --background-gradient: '';
+    --background-muted: #f7f7f7;
+
+    /* Text Colors: High contrast black/grey */
+    --color-primary: #1f1f1f;       /* Soft Black */
+    --color-secondary: #4a4a4a;
+    --color-tertiary: '';
+    --color-accent: #cba258;        /* Star/Gold Rewards Color */
+    --color-compliment: '';
+    --color-gradient: '';
+    --color-muted: #6b7280;
+    
+    /* The Iconic Green */
+    --color-link: #00754a;          /* Starbucks Brand Green */
+    --color-link-transparent: rgba(0, 117, 74, 0.1);
+
+    --color-success: #00754a;
+    --color-warning: #cba258;
+    --color-error: #d93025;
+    --color-info: '';
+    --color-highlight: #d4e9e2;     /* Mint Highlight */
+
+    /* Gradients: Subtle shifts from Brand Green to House Green */
+    --gradient-start: #00754a;      /* Darker Green Start */
+    --gradient-end: #1e3932;        /* House Green End */
+
+    /* Borders */
+    --border-primary: #e5e5e5;
+    --border-secondary: #00754a;    /* Green Borders for buttons */
+    --border-highlight: #1e3932;
+    --border-tertiary: '';
+
+    --shadow-dark: rgba(0, 0, 0, 0.1);
+    --shadow-light: '';
+    --shadow-text: '';
+
+    --padding-small: 1rem;
+    --padding-large: 2rem;
+
+    /* Softened edges for a friendly corporate feel */
+    --border-radius-small: 1.5rem;  /* Pill shapes */
+    --border-radius-large: 1rem;
+    --highlight-border-radius: 0.25rem;
+
+    --text-selection: #d4e9e2;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* =========================
+           DARK MODE (Updated)
+           ========================= */
+        --background-primary: #1e3932; /* House Green */
+        --background-secondary: #0b1a15;
+        --background-tertiary: #2c4a40;
+        --background-accent: '';
+        --background-compliment: '';
+        --background-gradient: '';
+        --background-muted: #162b25;
+
+        --color-primary: #ffffff;
+        --color-secondary: #d4e9e2;
+        --color-tertiary: '';
+        --color-accent: #cba258;
+        --color-compliment: '';
+        --color-gradient: '';
+        --color-muted: #a3b5b0;
+        
+        --color-link: #66cdaa;          /* Lighter Green for visibility on dark */
+        --color-link-transparent: rgba(102, 205, 170, 0.1);
+
+        --color-success: '';
+        --color-warning: '';
+        --color-error: '';
+        --color-info: '';
+        --color-highlight: #2c4a40;
+
+        /* FIXED: Gradient is now Light Mint -> White to pop against Dark Green background */
+        --gradient-start: #66cdaa;      /* Medium Aquamarine */
+        --gradient-end: #d4e9e2;        /* Starbucks Mint */
+
+        --border-primary: #2c4a40;
+        --border-secondary: #66cdaa;
+        --border-highlight: #ffffff;
+        --border-tertiary: '';
+
+        --shadow-dark: '';
+        --shadow-light: '';
+        --shadow-text: '';
+
+        --padding-small: 1rem;
+        --padding-large: 2rem;
+
+        --border-radius-small: 1.5rem;
+        --border-radius-large: 1rem;
+        --highlight-border-radius: 0.25rem;
+
+        --text-selection: #2c4a40;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", Helvetica, Arial, sans-serif; /* Clean Sans-Serif */
+}
+
+body {
+    background: var(--background-primary);
+    color: var(--color-primary);
+    font-size: 0.95rem; /* Slightly larger for readability */
+    line-height: 1.6rem;
+    font-weight: 400;
+}
+
+/* Special */
+.text-gradient {
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(135deg, var(--gradient-start) 0, var(--gradient-end) 100%);
+    background-size: 100%;
+    -webkit-box-decoration-break: clone;
+    /* Added font-weight ensure the gradient is visible */
+    font-weight: 800; 
+}
+
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+    font-family: "Inter", sans-serif; /* Consistent Typography */
+    width: fit-content;
+    font-weight: 700;
+    letter-spacing: -0.02em; /* Tighter tracking for modern look */
+}
+
+h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    color: var(--color-primary);
+}
+
+h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+h4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+h5 {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-transform: uppercase; /* Starbucks often uses uppercase for small headers */
+    letter-spacing: 0.05em;
+}
+
+h6 {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+p {
+    display: block;
+    width: fit-content;
+}
+
+span {
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+abbr {
+    font-family: inherit;
+}
+
+/* Content Sectioning */
+
+main {}
+
+header {}
+
+footer {}
+
+nav {}
+
+section {}
+
+address {
+    font-style: normal;
+}
+
+aside {
+    float: right;
+    width: 40%;
+    padding: 1.5rem;
+    margin: 0.5rem;
+    font-style: normal;
+    color: var(--color-primary);
+    background-color: var(--background-tertiary); /* Mint background */
+    border-radius: var(--border-radius-large);
+}
+
+
+/* Text Content */
+blockquote {
+    position: relative;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+    font-weight: 500;
+    font-style: italic;
+}
+
+blockquote::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-left: 4px solid var(--color-link); /* Green bar */
+    border-radius: 2px;
+}
+
+blockquote footer {
+    padding-top: 1rem;
+    font-size: 0.875rem;
+    font-style: normal;
+    color: var(--color-muted);
+}
+
+dd {
+    padding-bottom: 11px;
+}
+
+dl {}
+
+dt {
+    font-weight: 700;
+    color: var(--color-link);
+}
+
+figure {}
+
+figcaption {
+    padding-top: 10px;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-primary);
+    margin: 0.5rem 0;
+}
+
+
+ul,
+ol {
+    list-style-position: inside;
+    padding-left: 0.5rem;
+}
+
+li {
+    line-height: 1.8em;
+}
+
+/* Inline Text Elements */
+
+a {
+    color: var(--color-link);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:active,
+a:focus,
+a:hover {
+    text-decoration: underline;
+}
+
+mark,
+samp,
+kbd,
+code,
+time {
+    border-radius: var(--highlight-border-radius, 4px);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+}
+
+mark {
+    background-color: var(--color-highlight);
+    color: var(--color-primary);
+    padding: 0 4px;
+}
+
+samp {
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    background-color: var(--background-muted);
+    color: var(--color-primary);
+    border: 1px solid var(--border-primary);
+}
+
+kbd,
+time {
+    padding: 0rem 0.5rem;
+    background-color: var(--background-muted);
+    color: var(--color-primary);
+    font-size: 0.875rem;
+}
+
+code,
+pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    padding: 0.2rem 0.5rem;
+    background: var(--background-muted);
+    border: 1px solid var(--border-primary);
+    max-width: fit-content;
+    overflow-x: auto;
+}
+
+pre>code {
+    padding: 10px;
+    border: 0;
+    display: block;
+    overflow-x: auto;
+}
+
+pre {
+    border-radius: var(--border-radius-large);
+    background: #1f1f1f; /* Always dark for code blocks */
+    color: white;
+}
+
+sup,
+sub {
+    line-height: normal;
+}
+
+/* Image and multimedia */
+audio {
+    width: 100%;
+}
+
+audio,
+img,
+video {
+    border-radius: var(--border-radius-large);
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border-primary);
+    background: var(--background-primary);
+    border-radius: var(--border-radius-large);
+    overflow: hidden;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 8px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 8px;
+}
+
+th {
+    background-color: var(--background-muted);
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+td {
+    background: var(--background-primary);
+    border-top: 1px solid var(--border-primary);
+}
+
+td,
+th {
+    text-align: left;
+    padding: 1rem;
+}
+
+thead {
+    border-collapse: collapse;
+}
+
+tfoot {
+    border-top: 1px solid var(--color-primary);
+}
+
+table tr:hover td,
+tbody tr:nth-child(even):hover td {
+    background-color: var(--background-tertiary); /* Mint hover effect */
+}
+
+/* Form elements */
+input,
+button,
+select,
+optgroup,
+textarea {
+    /* margin: 0; */
+}
+
+button,
+select,
+input[type="submit"],
+input[type="button"],
+input[type="checkbox"],
+input[type="range"],
+input[type="radio"] {
+    cursor: pointer;
+}
+
+button {
+    color: var(--color-link);
+    background-color: transparent;
+    width: fit-content;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--border-secondary);
+    border-radius: 50px; /* Full pill shape */
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--background-tertiary);
+    transform: translateY(-1px);
+}
+
+button[disabled]:hover {
+    box-shadow: none;
+    transform: none;
+    background: transparent;
+}
+
+button:disabled,
+button[disabled] {
+    border-color: var(--border-primary);
+    color: var(--color-muted);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+label {
+    display: block;
+    max-width: fit-content;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+input,
+textarea,
+select {
+    font-size: 1rem;
+    background-color: var(--background-primary);
+    border: 1px solid var(--border-primary);
+    color: var(--color-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    /* max-width: fit-content; */
+    outline: none;
+    appearance: none;
+    transition: border-color 0.2s;
+}
+
+input:disabled {
+    background-color: var(--background-muted);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    padding: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    position: relative;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    border: 2px solid var(--color-muted);
+    appearance: none;
+}
+
+input[type="checkbox"] {
+    border-radius: 4px;
+    margin-left: 0;
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+    background: var(--color-link);
+    border-color: var(--color-link);
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+}
+
+input[type="range"] {
+    vertical-align: middle;
+    padding: 0;
+    height: 6px;
+    background: var(--border-primary);
+    border-radius: 10px;
+    border: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--color-link);
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+}
+
+input[type="color"] {
+    appearance: none;
+    border: none;
+    outline-style: none;
+    padding: 0;
+    max-width: initial;
+    height: 2.5rem;
+    width: 4rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+select:is([multiple]) {
+    background: none;
+    height: fit-content;
+}
+
+fieldset:focus-within,
+input:focus-within,
+textarea:focus-within,
+select:focus-within {
+    border-color: var(--color-link);
+    box-shadow: 0 0 0 2px var(--color-link-transparent);
+}
+
+fieldset:hover,
+input:hover,
+textarea:hover,
+select:hover {
+    border-color: var(--color-link);
+}
+
+progress {
+    appearance: none;
+    height: 0.75rem;
+    margin: 0.75rem 0;
+}
+
+progress::-webkit-progress-bar {
+    background: var(--background-muted);
+    border: 0;
+    border-radius: var(--border-radius-small);
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--color-link);
+    border-radius: var(--border-radius-small);
+}
+
+progress::-moz-progress-bar {
+    background-color: var(--color-link);
+    border-radius: var(--border-radius-small);
+}
+
+fieldset {
+    border: 1px solid var(--border-primary);
+    border-radius: var(--border-radius-large);
+    margin: 0;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    max-width: fit-content;
+    background: var(--background-secondary);
+}
+
+/* Interactive elements */
+details {
+    border: 1px solid var(--border-primary);
+    border-radius: var(--border-radius-large);
+    padding: 1rem;
+    background: var(--background-primary);
+}
+
+summary {
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--color-link);
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--border-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+.card,
+.button-card {
+    background-color: var(--background-primary);
+    color: var(--color-primary);
+    padding: 2rem;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* Soft float shadow */
+}
+
+.card {
+    border: 1px solid var(--border-primary);
+    border-top: 4px solid var(--color-link); /* Green top accent */
+}
+
+.button-card {
+    border: 1px solid var(--border-primary);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.button-card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.button-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--color-link);
+}
+
+.card-button-primary,
+.card-button-secondary {
+    border-radius: 50px !important;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+}
+
+.card-button-primary {
+    color: white !important;
+    background: var(--color-link) !important;
+    border: 1px solid var(--color-link) !important;
+}
+
+.card-button-secondary {
+    color: var(--color-link) !important;
+    background: transparent !important;
+    border: 1px solid var(--color-link) !important;
+}
+
+.card-button-primary:hover {
+    background-color: #00623e !important; /* Darker Green hover */
+    transform: scale(1.02);
+}
+.card-button-secondary:hover {
+    background-color: var(--background-tertiary) !important;
+}
+
+
+@media (min-width: 640px) {
+    body {
+        font-size: 1rem;
+        line-height: 1.6rem;
+    }
+
+    h1 {
+        font-size: 3rem; /* Bigger, bolder headers */
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-size: 2rem;
+        line-height: 2.25rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+
+    h5 {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    h6 {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    button {
+        width: fit-content;
+    }
+
+    input {
+        max-width: 600px;
+    }
+}
