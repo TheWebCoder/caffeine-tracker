@@ -4,7 +4,7 @@ A full-stack web application for monitoring daily caffeine intake with real-time
 
 ## 🚀 Live Demo
 
-[View Live App](#) | [API Documentation](#)
+[caffeinetrackr.netlify.app](https://caffeinetrackr.netlify.app/) 
 
 ## 📋 Table of Contents
 
@@ -205,7 +205,6 @@ useEffect(() => {
 - [ ] Barcode scanner for quick beverage entry
 - [ ] Caffeine metabolism calculator based on user body weight
 - [ ] Export data as CSV for personal analysis
-- [ ] Dark mode support
 - [ ] Progressive Web App (PWA) capabilities for offline use
 
 ## 🤝 Contributing
