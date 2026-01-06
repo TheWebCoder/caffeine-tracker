@@ -6,19 +6,6 @@ A full-stack web application for monitoring daily caffeine intake with real-time
 
 [caffeinetrackr.netlify.app](https://caffeinetrackr.netlify.app/) 
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Development Process](#development-process)
-- [Challenges & Solutions](#challenges--solutions)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Overview
 
 Caffeine Tracker is a personal health monitoring tool that allows users to log their caffeine intake throughout the day. The application provides insights into consumption patterns and helps users stay within recommended daily limits. As someone who struggled with managing my own caffeine intake during long coding sessions, I built this app to solve a real problem I was facing.
