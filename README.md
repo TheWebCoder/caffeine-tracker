@@ -4,7 +4,8 @@ A full-stack web application for monitoring daily caffeine intake with real-time
 
 ## 🚀 Live Demo
 
-[caffeinetrackr.netlify.app](https://caffeinetrackr.netlify.app/) 
+<a href="https://caffeinetrackr.netlify.app" target="_blank" rel="noopener noreferrer">https://caffeinetrackr.netlify.app</a>.
+
 
 ## Overview
 
