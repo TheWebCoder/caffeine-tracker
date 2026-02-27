@@ -8,7 +8,6 @@ export default function Authentication(props) {
     const [password, setPassword] = useState("");
     const [isAuthenticating, setIsAuthenticating] = useState(false);
     const [error, setError] = useState(null);
-
     const { signup, login } = useAuth();
 
     async function handleAuthenticate() {
@@ -24,17 +23,13 @@ export default function Authentication(props) {
         try {
             setIsAuthenticating(true);
             setError(null);
-
             if (isRegistration) {
-                //register a user
                 await signup(email, password);
             } else {
-                //login a user
                 await login(email, password);
             }
             handleCloseModal();
         } catch (err) {
-            console.log(err.message);
             setError(err.message);
         } finally {
             setIsAuthenticating(false);
@@ -42,49 +37,69 @@ export default function Authentication(props) {
     }
 
     return (
-        <>
-            <h2 className="sign-up-text">
-                {isRegistration ? "Sign Up" : "Login"}
-            </h2>
-            <p>
-                {isRegistration
-                    ? "Create an account?"
-                    : "Sign in to your account!"}
-            </p>
-            {error && <p>❌ {error}</p>}
+        <div className="flex flex-col gap-5">
+            <div>
+                <h2 className="font-display text-2xl font-bold text-stone-100">
+                    {isRegistration ? "Create account" : "Welcome back"}
+                </h2>
+                <p className="text-stone-400 text-sm mt-1">
+                    {isRegistration ? "Sign up to track your caffeine." : "Sign in to continue."}
+                </p>
+            </div>
+            {error && (
+                <div className="rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 px-4 py-3 text-sm flex items-center gap-2">
+                    <i className="fa-solid fa-circle-exclamation" aria-hidden />
+                    {error}
+                </div>
+            )}
             <input
                 value={email}
-                onChange={(e) => {
-                    setEmail(e.target.value);
-                }}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                type="email"
+                autoComplete="email"
+                className="input-field"
             />
             <input
                 value={password}
-                onChange={(e) => {
-                    setPassword(e.target.value);
-                }}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
-                placeholder="************"
+                placeholder="Password (6+ characters)"
+                autoComplete={isRegistration ? "new-password" : "current-password"}
+                className="input-field"
             />
-            <button onClick={handleAuthenticate}>
-                <p>{isAuthenticating ? "Authenticating..." : "Submit"}</p>
+            <button
+                type="button"
+                onClick={handleAuthenticate}
+                disabled={isAuthenticating}
+                className="btn-primary w-full py-3 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
+                {isAuthenticating ? (
+                    <>
+                        <span className="inline-block w-4 h-4 border-2 border-stone-900 border-t-transparent rounded-full animate-spin" aria-hidden />
+                        Signing in…
+                    </>
+                ) : (
+                    "Continue"
+                )}
             </button>
-            <hr />
-            <div className="register-content">
-                <p>
-                    {isRegistration
-                        ? "Already have an account?"
-                        : "Don\t have an account?"}
-                </p>
-                <button
-                    onClick={() => {
-                        setIsRegistration(!isRegistration);
-                    }}
-                >
-                    <p>{isRegistration ? "Sign In" : "Sign Up"}</p>
-                </button>
+            <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-white/10" />
+                </div>
+                <div className="relative flex justify-center text-xs">
+                    <span className="bg-stone-800/60 px-3 text-stone-500">
+                        {isRegistration ? "Already have an account?" : "New here?"}
+                    </span>
+                </div>
             </div>
-        </>
+            <button
+                type="button"
+                onClick={() => setIsRegistration(!isRegistration)}
+                className="btn-ghost w-full justify-center"
+            >
+                {isRegistration ? "Sign in instead" : "Create an account"}
+            </button>
+        </div>
     );
 }

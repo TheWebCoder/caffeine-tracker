@@ -14,7 +14,6 @@ export default function CoffeeForm(props) {
     const [coffeeCost, setCoffeeCost] = useState(0);
     const [hour, setHour] = useState(0);
     const [min, setMin] = useState(0);
-
     const { globalData, setGlobalData, globalUser } = useAuth();
 
     async function handleSubmitForm() {
@@ -22,57 +21,36 @@ export default function CoffeeForm(props) {
             setShowModal(true);
             return;
         }
-
-        // define a guard clause that only submits the form if it is completed
-
-        if (!selectedCoffee) {
-            return;
-        }
+        if (!selectedCoffee) return;
 
         try {
-            // then we're going to create a new data object
-            const newGlobalData = {
-                ...(globalData || {}),
-            };
-
+            const newGlobalData = { ...(globalData || {}) };
             const nowTime = Date.now();
-
-            const timeToSubtract = hour * 60 * 60 * 1000 + min * 60 * 100;
-
+            const timeToSubtract = hour * 60 * 60 * 1000 + min * 60 * 1000;
             const timestamp = nowTime - timeToSubtract;
-
-            const newData = {
-                name: selectedCoffee,
-                cost: coffeeCost,
-            };
-
+            const newData = { name: selectedCoffee, cost: coffeeCost };
             newGlobalData[timestamp] = newData;
-            console.log(timestamp, selectedCoffee, coffeeCost);
-
-            // update the global state
             setGlobalData(newGlobalData);
 
-            // persist the data in the firebase firestore
             const userRef = doc(db, "users", globalUser.uid);
-            const res = await setDoc(
-                userRef,
-                {
-                    [timestamp]: newData,
-                },
-                { merge: true }
-            );
+            await setDoc(userRef, { [timestamp]: newData }, { merge: true });
             setSelectedCoffee(null);
             setHour(0);
             setMin(0);
             setCoffeeCost(0);
         } catch (err) {
-            console.log(err.message);
+            console.error(err.message);
         }
     }
 
     function handleCloseModal() {
         setShowModal(false);
     }
+
+    const inputBase = "input-field";
+    const cardBase = "flex flex-col items-center justify-center gap-1.5 p-4 rounded-xl border-2 transition-all duration-200 ";
+    const cardDefault = "border-white/10 bg-white/[0.03] hover:border-amber-500/30 hover:bg-amber-500/5";
+    const cardSelected = "border-amber-500/60 bg-amber-500/10 ring-2 ring-amber-500/20 shadow-lg shadow-amber-500/10";
 
     return (
         <>
@@ -81,119 +59,119 @@ export default function CoffeeForm(props) {
                     <Authentication handleCloseModal={handleCloseModal} />
                 </Modal>
             )}
-            <div className="section-header">
-                <i className="fa-solid fa-pencil"></i>
-                <h2>Start Tracking Today</h2>
-            </div>
-            <h4>Select coffee type</h4>
-            <div className="coffee-grid">
-                {coffeeOptions.slice(0, 5).map((option, optionIndex) => {
-                    return (
+            <section className="space-y-6 animate-in opacity-0 animate-in-delay-2">
+                <div className="section-heading">
+                    <span className="section-heading-icon">
+                        <i className="fa-solid fa-pencil" aria-hidden />
+                    </span>
+                    <h2 className="font-display text-xl font-bold">Start tracking today</h2>
+                </div>
+
+                <div>
+                    <label className="block text-stone-400 font-medium text-sm mb-2">Coffee type</label>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {coffeeOptions.slice(0, 5).map((option, optionIndex) => (
+                            <button
+                                key={optionIndex}
+                                type="button"
+                                onClick={() => {
+                                    setSelectedCoffee(option.name);
+                                    setShowCoffeeTypes(false);
+                                }}
+                                className={`${cardBase} ${option.name === selectedCoffee ? cardSelected : cardDefault}`}
+                            >
+                                <span className="font-semibold text-stone-100 text-sm text-center leading-tight">
+                                    {option.name}
+                                </span>
+                                <span className="text-xs text-amber-400/80">{option.caffeine} mg</span>
+                            </button>
+                        ))}
                         <button
+                            type="button"
                             onClick={() => {
-                                setSelectedCoffee(option.name);
-                                setShowCoffeeTypes(false);
+                                setShowCoffeeTypes(true);
+                                setSelectedCoffee(null);
                             }}
-                            className={
-                                "button-card " +
-                                (option.name === selectedCoffee
-                                    ? "coffee-button-selected"
-                                    : "")
-                            }
-                            key={optionIndex}
+                            className={`${cardBase} ${showCoffeeTypes ? cardSelected : cardDefault}`}
                         >
-                            <h4>{option.name}</h4>
-                            <p>{option.caffeine}</p>
+                            <span className="font-semibold text-stone-100 text-sm">Other</span>
+                            <span className="text-xs text-stone-500">n/a</span>
                         </button>
-                    );
-                })}
-                <button
-                    onClick={() => {
-                        setShowCoffeeTypes(true);
-                        setSelectedCoffee(null);
-                    }}
-                    className={
-                        "button-card " +
-                        (showCoffeeTypes ? "coffee-button-selected" : "")
-                    }
-                >
-                    <h4>Other</h4>
-                    <p>n/a</p>
-                </button>
-            </div>
-            {showCoffeeTypes && (
-                <select
-                    onChange={(e) => {
-                        setSelectedCoffee(e.target.value);
-                    }}
-                    name="coffee-list"
-                    id="coffee-list"
-                >
-                    <option value={null}>Select type</option>
-                    {coffeeOptions.map((option, optionIndex) => {
-                        return (
-                            <option value={option.name} key={optionIndex}>
-                                {option.name} ({option.caffeine}mg)
-                            </option>
-                        );
-                    })}
-                </select>
-            )}
-            <h4>Add the cost ($)</h4>
-            <input
-                className="w-full"
-                type="number"
-                value={coffeeCost}
-                onChange={(e) => {
-                    setCoffeeCost(e.target.value);
-                }}
-                placeholder="4.50"
-            />
-            <h4>Time since consumption</h4>
-            <div className="time-entry">
-                <div>
-                    <h6>Hours</h6>
-                    <select
-                        onChange={(e) => {
-                            setHour(e.target.value);
-                        }}
-                        id="hours-select"
-                    >
-                        {[
-                            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-                            15, 16, 17, 18, 19, 20, 21, 22, 23,
-                        ].map((hour, hourIndex) => {
-                            return (
-                                <option key={hourIndex} value={hour}>
-                                    {hour}
+                    </div>
+                </div>
+
+                {showCoffeeTypes && (
+                    <div className="animate-in opacity-0">
+                        <select
+                            onChange={(e) => setSelectedCoffee(e.target.value)}
+                            name="coffee-list"
+                            id="coffee-list"
+                            className={`${inputBase} max-w-md`}
+                        >
+                            <option value="">Select type</option>
+                            {coffeeOptions.map((option, optionIndex) => (
+                                <option key={optionIndex} value={option.name}>
+                                    {option.name} ({option.caffeine} mg)
                                 </option>
-                            );
-                        })}
-                    </select>
-                </div>
+                            ))}
+                        </select>
+                    </div>
+                )}
+
                 <div>
-                    <h6>Mins</h6>
-                    <select
-                        onChange={(e) => {
-                            setMin(e.target.value);
-                        }}
-                        id="mins-select"
-                    >
-                        {[0, 1, 2, 3, 4, 5, 10, 15, 30, 45].map(
-                            (min, minIndex) => {
-                                return (
-                                    <option key={minIndex} value={min}>
-                                        {min}
-                                    </option>
-                                );
-                            }
-                        )}
-                    </select>
+                    <label className="block text-stone-400 font-medium text-sm mb-2">Cost ($)</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={coffeeCost}
+                        onChange={(e) => setCoffeeCost(e.target.value)}
+                        placeholder="4.50"
+                        className={`${inputBase} max-w-[10rem]`}
+                    />
                 </div>
-            </div>
-            <button onClick={handleSubmitForm}>
-                <p>Add Entry</p>
-            </button>
+
+                <div>
+                    <label className="block text-stone-400 font-medium text-sm mb-2">Time since consumption</label>
+                    <div className="grid grid-cols-2 gap-3 max-w-[14rem]">
+                        <div>
+                            <label htmlFor="hours-select" className="sr-only">Hours</label>
+                            <select
+                                id="hours-select"
+                                value={hour}
+                                onChange={(e) => setHour(Number(e.target.value))}
+                                className={inputBase}
+                            >
+                                {Array.from({ length: 24 }, (_, i) => (
+                                    <option key={i} value={i}>{i}h</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <label htmlFor="mins-select" className="sr-only">Minutes</label>
+                            <select
+                                id="mins-select"
+                                value={min}
+                                onChange={(e) => setMin(Number(e.target.value))}
+                                className={inputBase}
+                            >
+                                {[0, 1, 2, 3, 4, 5, 10, 15, 30, 45].map((m) => (
+                                    <option key={m} value={m}>{m}m</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    onClick={handleSubmitForm}
+                    className="btn-primary"
+                >
+                    <i className="fa-solid fa-plus" aria-hidden />
+                    Add entry
+                </button>
+            </section>
         </>
     );
 }
