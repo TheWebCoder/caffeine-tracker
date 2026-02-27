@@ -6,7 +6,6 @@ A full-stack web application for monitoring daily caffeine intake with real-time
 
 <a href="https://caffeinetrackr.netlify.app" target="_blank">https://caffeinetrackr.netlify.app</a>
 
-
 ## Overview
 
 Caffeine Tracker is a personal health monitoring tool that allows users to log their caffeine intake throughout the day. The application provides insights into consumption patterns and helps users stay within recommended daily limits. As someone who struggled with managing my own caffeine intake during long coding sessions, I built this app to solve a real problem I was facing.
@@ -24,17 +23,20 @@ Caffeine Tracker is a personal health monitoring tool that allows users to log t
 ## 🛠 Tech Stack
 
 **Frontend:**
+
 - React 18.x
 - Vite (build tool)
-- CSS3 (custom styling)
+- Tailwind CSS (utility-first styling)
 - ESLint (code quality)
 
 **Backend & Services:**
+
 - Firebase Authentication
 - Cloud Firestore (NoSQL database)
 - Firebase Hosting
 
 **Development Tools:**
+
 - Git & GitHub
 - npm
 - VS Code
@@ -50,12 +52,14 @@ Caffeine Tracker is a personal health monitoring tool that allows users to log t
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/TheWebCoder/caffeine-tracker.git
 cd caffeine-tracker
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
@@ -67,10 +71,11 @@ npm install
    - Copy your Firebase config
 
 4. Create a `firebase.js` file in the root directory:
+
 ```javascript
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -78,7 +83,7 @@ const firebaseConfig = {
   projectId: "YOUR_PROJECT_ID",
   storageBucket: "YOUR_STORAGE_BUCKET",
   messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  appId: "YOUR_APP_ID",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -87,6 +92,7 @@ export const db = getFirestore(app);
 ```
 
 5. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -104,6 +110,7 @@ This creates an optimized production build in the `dist` folder.
 ### Deployment
 
 Deploy to Firebase Hosting:
+
 ```bash
 npm install -g firebase-tools
 firebase login
@@ -118,7 +125,6 @@ caffeine-tracker/
 ├── public/              # Static assets
 ├── src/
 │   ├── components/      # React components
-│   ├── styles/          # CSS modules
 │   ├── utils/           # Helper functions
 │   ├── App.jsx          # Main app component
 │   └── main.jsx         # Entry point
@@ -152,16 +158,13 @@ As a developer, I found myself consuming caffeine throughout the day without tra
 
 ```javascript
 useEffect(() => {
-  const unsubscribe = onSnapshot(
-    collection(db, 'entries'),
-    (snapshot) => {
-      const entries = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setEntries(entries);
-    }
-  );
+  const unsubscribe = onSnapshot(collection(db, "entries"), (snapshot) => {
+    const entries = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setEntries(entries);
+  });
   return () => unsubscribe();
 }, []);
 ```
@@ -182,7 +185,7 @@ useEffect(() => {
 
 **Problem:** The initial design looked great on desktop but buttons were too small and spacing was cramped on mobile devices.
 
-**Solution:** Adopted a mobile-first CSS approach with fluid typography and touch-friendly tap targets (minimum 44x44px). Used CSS Grid and Flexbox for responsive layouts without media query hell.
+**Solution:** Implemented Tailwind CSS's responsive design utilities to create touch-friendly tap targets (minimum 44x44px) and adapt layouts across screen sizes. Tailwind's mobile-first breakpoints and utility classes made it easy to ensure a seamless experience without writing custom media queries.
 
 ## 🔮 Future Enhancements
 
@@ -212,6 +215,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👤 Author
 
 **Bryan G**
+
 - GitHub: [@TheWebCoder](https://github.com/TheWebCoder)
 
 ## 🙏 Acknowledgments
@@ -222,4 +226,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-*Built with ☕ and React*
+_Built with ☕ and React_
